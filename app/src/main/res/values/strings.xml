@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">GiffySearch</string>
+    <string name="search_value">Search</string>
+    <string name="history_list_view_value">Search History</string>
+</resources>
