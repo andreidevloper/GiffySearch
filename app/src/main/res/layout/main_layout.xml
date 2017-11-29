@@ -1,73 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical" android:layout_width="match_parent"
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main_frame_layout"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorWhite">
 
-    <TextView
-        android:id="@+id/app_logo_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-
-        android:text="GiffySearch"
-        android:fontFamily="sans-serif-smallcaps"
-        android:textColor="@color/colorBlack"
-        android:textSize="36sp"
-        tools:text="GiffySearch"
-
-        android:layout_gravity="center"
-        android:layout_marginTop="70dp"
-
-        />
-
-    <SearchView
-        android:id="@+id/main_search_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="#000000"
-
-        android:iconifiedByDefault="false"
-        android:queryHint="What are you looking for?"
-        android:maxWidth="1000dp"
-
-        android:layout_marginTop="50dp"
-        android:layout_marginRight="15dp"
-        android:layout_marginLeft="15dp"
-
-        />
-
-    <TextView
-        android:id="@+id/history_list_view_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-
-        android:text="@string/history_list_view_value"
-        android:fontFamily="sans-serif"
-        android:textColor="@color/colorBlack"
-        android:textSize="14sp"
-        tools:text="@string/history_list_view_value"
-
-        android:layout_gravity="left"
-        android:layout_marginBottom="20dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="20dp"
-
-        />
-
-    <ListView
-        android:id="@+id/history_list_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-
-        android:footerDividersEnabled="false"
-        android:headerDividersEnabled="false"
-
-        android:layout_marginRight="20dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginBottom="30dp"
-
-        />
-
-</LinearLayout>
+</FrameLayout>
