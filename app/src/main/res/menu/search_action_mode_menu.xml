@@ -1,0 +1,14 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+
+        android:id="@+id/search_bar_menu_item"
+        android:title="@string/search_value"
+        android:actionLayout="@layout/search_action_mode_layout"
+        android:enabled="true"
+        app:showAsAction="always"
+        android:visible="true"
+        />
+
+</menu>
