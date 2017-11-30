@@ -15,9 +15,15 @@ Google:
 Giphy:
 
 * https://developers.giphy.com/
+* https://github.com/Giphy/GiphyAPI
 * https://github.com/Giphy/giphy-android-sdk-core
 
 Glide:
 
 * https://bumptech.github.io/glide/
 * https://github.com/bumptech/glide
+
+OkHttp:
+
+* http://square.github.io/okhttp/
+* https://github.com/square/okhttp
