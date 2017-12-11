@@ -56,7 +56,7 @@ public class SearchResultRecyclerViewAdapter extends RecyclerView.Adapter<Recycl
     // For pagging
     private static final int VIEW_TYPE_INVALID = -1;
     private static final int VIEW_TYPE_GIF = 0;
-    private static final int VIEW_TYPE_LOADING = 1;
+    public static final int VIEW_TYPE_LOADING = 1;
     private static final int VIEW_TYPE_RESPONSE_FAILED = 2;
     private PaggingController paggingController_;
     private LinkedList<RecyclerViewItem> recyclerViewItems_;
