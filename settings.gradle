@@ -1,4 +1,2 @@
-include ':app', ':giphy-android-sdk-core', ':glide-full-4.3.1-javadoc'
+include ':app'
 
-project(':giphy-android-sdk-core').projectDir = new File(settingsDir, 'app/libs/giphy-android-sdk-core/app')
-project(':glide-full-4.3.1-javadoc').projectDir = new File('app/libs/glide-full-4.3.1-javadoc')
