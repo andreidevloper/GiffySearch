@@ -1,5 +1,13 @@
 <resources>
     <string name="app_name">GiffySearch</string>
     <string name="search_value">Search</string>
-    <string name="history_list_view_value">Search History</string>
+    <string name="history_list_view_value">Search history: </string>
+    <string name="title_description">Giffy Search</string>
+
+    <string name="connection_disabled">Network is disabled. Check Wi-Fi !</string>
+    <string name="retry">Retry !</string>
+    <string name="response_failed">Response failed. Try again.</string>
+
+    <string name="gif_description">GIF has got through GIPHY, OkHttp, GSON, and Glide</string>
+    <string name="gif_fullscreen_description">Full screen view of an GIF</string>
 </resources>
