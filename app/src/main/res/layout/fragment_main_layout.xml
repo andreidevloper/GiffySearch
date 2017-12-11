@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_fragment"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorWhite"
+    android:focusableInTouchMode="true" >
+
+    <ImageView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="40dp"
+        android:adjustViewBounds="true"
+        android:background="@drawable/title_giffy_search"
+        android:contentDescription="@string/title_description"/>
+
+
+
+    <SearchView
+        android:id="@+id/first_search_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:background="@color/colorBlack"
+
+        android:iconifiedByDefault="false"
+        android:inputType="textNoSuggestions"
+        android:queryHint=""
+        android:visibility="visible" />
+
+    <TextView
+        android:id="@+id/history_list_view_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:text="@string/history_list_view_value"
+        android:textColor="@color/colorBlack"
+        android:textSize="22sp"
+        tools:text="@string/history_list_view_value"
+
+        android:layout_gravity="start"
+        android:layout_marginBottom="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="40dp"
+
+        />
+
+    <ListView
+        android:id="@+id/history_list_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        android:footerDividersEnabled="false"
+        android:headerDividersEnabled="false"
+
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/border"
+
+        android:descendantFocusability="blocksDescendants"
+
+        />
+
+</LinearLayout>
