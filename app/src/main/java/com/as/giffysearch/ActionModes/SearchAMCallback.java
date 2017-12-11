@@ -1,5 +1,6 @@
-package com.as.giffysearch.Fragments.SearchActionMode;
+package com.as.giffysearch.ActionModes;
 
+import android.content.Context;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -13,9 +14,11 @@ import android.widget.RelativeLayout;
 
 import com.as.giffysearch.MainActivity;
 import com.as.giffysearch.R;
+import com.as.giffysearch.Utility.ActivityHelper;
 import com.as.giffysearch.Utility.Debugging;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * Created by Andrejs Skorinko on 11/27/2017.
@@ -24,28 +27,33 @@ import org.jetbrains.annotations.NotNull;
 
 public class SearchAMCallback implements ActionMode.Callback
 {
-    public interface ISearchAMCallbackOwner
+    public interface ISearchAMCallbackObserver
     {
         void handleInputAM(String text);
         void destroyAM();
     }
 
-    private ISearchAMCallbackOwner actionModeOwner_;
+    private ISearchAMCallbackObserver actionModeObserver_;
+
+    // Context
+    private Context applicationContext_;
 
     // Views
     private EditText searchAMView_;
 
-    public SearchAMCallback(@NotNull ISearchAMCallbackOwner actionModeOwner)
+    // Selected value from history list in MainFragment
+    private String historyValue_;
+
+    public SearchAMCallback(@NotNull Context applicationContext,
+                            @NotNull ISearchAMCallbackObserver actionModeObserver,
+                            @Nullable String historyValue)
     {
-        if(actionModeOwner != null)
-        {
-            // Who is responsible for created action mode callback ? (for e.x. SearchFragment)
-            actionModeOwner_ = actionModeOwner;
-        }
-        else
-        {
-            Debugging.logClass(Log.ERROR, MainActivity.LOG_TAG, "SearchAMCallback constructor can't take null actionModeOwner !");
-        }
+        applicationContext_ = applicationContext;
+
+        // Save observer
+        actionModeObserver_ = actionModeObserver;
+
+        historyValue_ = historyValue;
     }
 
     @Override
@@ -63,7 +71,6 @@ public class SearchAMCallback implements ActionMode.Callback
             public void onTextChanged(CharSequence s, int start,
                                       int before, int count)
             {
-                Debugging.logClass(Log.DEBUG, MainActivity.LOG_TAG, s.toString());
                 int length = s.length();
                 if(length > 0)
                 {
@@ -73,6 +80,7 @@ public class SearchAMCallback implements ActionMode.Callback
                 {
                     searchAMView_.setCompoundDrawablesWithIntrinsicBounds(android.R.drawable.ic_menu_search, 0, 0, 0);
                 }
+
             }
 
             @Override
@@ -94,7 +102,7 @@ public class SearchAMCallback implements ActionMode.Callback
             public boolean onKey(View v, int keyCode, KeyEvent event)
             {
                 boolean result = false;
-                if((actionModeOwner_ == null) || (searchAMView_ == null))
+                if((actionModeObserver_ == null) || (searchAMView_ == null))
                 {
                     Debugging.logClass(Log.ERROR, MainActivity.LOG_TAG, "actionModeOwner_ || searchAMView_ is null. Can't call onKey() !");
                 }
@@ -102,7 +110,7 @@ public class SearchAMCallback implements ActionMode.Callback
                 {
                     if ((event.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER))
                     {
-                        actionModeOwner_.handleInputAM(searchAMView_.getText().toString());
+                        actionModeObserver_.handleInputAM(searchAMView_.getText().toString());
                         searchAMView_.clearFocus();
                         result = true;
                     }
@@ -114,34 +122,41 @@ public class SearchAMCallback implements ActionMode.Callback
 
         searchAMView_.requestFocus();
 
+        if(!historyValue_.isEmpty())
+        {
+            searchAMView_.setText(historyValue_);
+            ActivityHelper.showKeyboard(applicationContext_);
+        }
+
         return true;
     }
 
     @Override
     public boolean onPrepareActionMode(ActionMode mode, Menu menu)
     {
-        Debugging.logClass(Log.DEBUG, MainActivity.LOG_TAG, "onPrepareActionMode");
+        //Debugging.logClass(Log.DEBUG, MainActivity.LOG_TAG, "onPrepareActionMode");
         return false;
     }
 
     @Override
     public boolean onActionItemClicked(ActionMode mode, MenuItem item)
     {
-        Debugging.logClass(Log.DEBUG, MainActivity.LOG_TAG, "onActionItemClicked");
+        //Debugging.logClass(Log.DEBUG, MainActivity.LOG_TAG, "onActionItemClicked");
         return false;
     }
 
     @Override
     public void onDestroyActionMode(ActionMode mode)
     {
-        if(actionModeOwner_ == null)
+        if(actionModeObserver_ == null)
         {
             Debugging.logClass(Log.ERROR, MainActivity.LOG_TAG, "actionModeOwner_ is null. Can't call DestroyActionMode() !");
         }
         else
         {
-            actionModeOwner_.destroyAM();
+            actionModeObserver_.destroyAM();
         }
     }
+
 }
 
