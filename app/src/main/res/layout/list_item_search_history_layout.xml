@@ -1,24 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorWhite">
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/list_item_search_history_text_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
 
-        android:text="computer"
-        android:fontFamily="sans-serif"
-        android:textColor="@color/colorBlack"
-        android:textSize="15sp"
-        android:textAllCaps="false"
-
-        android:gravity="center"
-        android:paddingTop="10dp"
         android:paddingBottom="10dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="15dp"
 
-        />
+        android:textAllCaps="false"
+        android:textColor="@color/colorBlack"
+        android:textSize="20sp"
+
+        android:visibility="visible"
+        tools:text="computer" />
 
 </LinearLayout>
