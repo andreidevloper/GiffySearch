@@ -2,10 +2,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-
         android:id="@+id/search_bar_menu_item"
         android:title="@string/search_value"
-        android:actionLayout="@layout/search_action_mode_layout"
+        android:actionLayout="@layout/action_mode_search_bar_layout"
         android:enabled="true"
         app:showAsAction="always"
         android:visible="true"
