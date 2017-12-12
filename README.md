@@ -5,6 +5,7 @@ Android application that can search GIFs through giphy service.
 # Requirements:
 
 * Minimal Android SDK version - 14 API.
+* Target Android SDK version - 27 API.
 
 # Credits:
 
