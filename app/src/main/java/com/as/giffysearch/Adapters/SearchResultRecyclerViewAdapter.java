@@ -36,7 +36,7 @@ import com.as.giffysearch.Models.JSON.Giphy.GifResult;
 import com.as.giffysearch.R;
 import com.as.giffysearch.Utility.Debugging;
 
-import com.as.giffysearch.Controllers.PaggingController;
+import com.as.giffysearch.Controllers.PagingController;
 
 /**
  * Created by Andrejs Skorinko on 11/30/2017.
@@ -53,12 +53,12 @@ public class SearchResultRecyclerViewAdapter extends RecyclerView.Adapter<Recycl
     private final RequestBuilder<Drawable> requestBuilder_;
     private final ViewPreloadSizeProvider<GifResult> preloadSizeProvider_;
 
-    // For pagging
+    // For paging
     private static final int VIEW_TYPE_INVALID = -1;
     private static final int VIEW_TYPE_GIF = 0;
     public static final int VIEW_TYPE_LOADING = 1;
     private static final int VIEW_TYPE_RESPONSE_FAILED = 2;
-    private PaggingController paggingController_;
+    private PagingController pagingController_;
     private LinkedList<RecyclerViewItem> recyclerViewItems_;
 
     // For failed response button
@@ -67,7 +67,7 @@ public class SearchResultRecyclerViewAdapter extends RecyclerView.Adapter<Recycl
     public SearchResultRecyclerViewAdapter(Activity activity,
                                            RequestBuilder<Drawable> requestBuilder,
                                            ViewPreloadSizeProvider<GifResult> preloadSizeProvider,
-                                           PaggingController paggingController,
+                                           PagingController pagingController,
                                            LinkedList<RecyclerViewItem> recyclerViewItems,
                                            FailedResponseViewHolder.ClickListener clickListener
                                            )
@@ -76,7 +76,7 @@ public class SearchResultRecyclerViewAdapter extends RecyclerView.Adapter<Recycl
         requestBuilder_ = requestBuilder;
         preloadSizeProvider_ = preloadSizeProvider;
 
-        paggingController_ = paggingController;
+        pagingController_ = pagingController;
         recyclerViewItems_ = recyclerViewItems;
 
         clickListener_ = clickListener;
@@ -92,7 +92,7 @@ public class SearchResultRecyclerViewAdapter extends RecyclerView.Adapter<Recycl
         SearchRecyclerViewItemFactory.createLoaderRecyclerViewItem(
                 SearchRecyclerViewItemFactory.SearchRecyclerViewItemType.VIEW_ITEM_LOADER,
                 this,
-                paggingController_);
+                pagingController_);
     }
 
     public void removeLoader()
@@ -100,7 +100,7 @@ public class SearchResultRecyclerViewAdapter extends RecyclerView.Adapter<Recycl
         SearchRecyclerViewItemFactory.removeLoaderRecyclerViewItem(
                 SearchRecyclerViewItemFactory.SearchRecyclerViewItemType.VIEW_ITEM_LOADER,
                 this,
-                paggingController_);
+                pagingController_);
     }
 
     public void addFailedResponse()
@@ -108,7 +108,7 @@ public class SearchResultRecyclerViewAdapter extends RecyclerView.Adapter<Recycl
         SearchRecyclerViewItemFactory.createFailedResponseRecyclerViewItem(
                 SearchRecyclerViewItemFactory.SearchRecyclerViewItemType.VIEW_ITEM_FAILED_RESPONSE,
                 this,
-                paggingController_);
+                pagingController_);
     }
 
     public void removeFailedResponse()
@@ -116,7 +116,7 @@ public class SearchResultRecyclerViewAdapter extends RecyclerView.Adapter<Recycl
         SearchRecyclerViewItemFactory.removeFailedResponseRecyclerViewItem(
                 SearchRecyclerViewItemFactory.SearchRecyclerViewItemType.VIEW_ITEM_FAILED_RESPONSE,
                 this,
-                paggingController_);
+                pagingController_);
     }
 
     @Override

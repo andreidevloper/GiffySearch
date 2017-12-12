@@ -6,7 +6,7 @@ import com.as.giffysearch.Adapters.RecyclerViewItems.SearchResultRecyclerViewIte
 import com.as.giffysearch.Adapters.RecyclerViewItems.SearchResultRecyclerViewItems.GifResultRecyclerViewItem;
 import com.as.giffysearch.Adapters.RecyclerViewItems.SearchResultRecyclerViewItems.LoaderRecyclerViewItem;
 import com.as.giffysearch.Adapters.SearchResultRecyclerViewAdapter;
-import com.as.giffysearch.Controllers.PaggingController;
+import com.as.giffysearch.Controllers.PagingController;
 import com.as.giffysearch.Models.JSON.Giphy.GifResult;
 import com.as.giffysearch.Utility.Debugging;
 
@@ -42,38 +42,38 @@ public final class SearchRecyclerViewItemFactory
 
     static public void createLoaderRecyclerViewItem(SearchRecyclerViewItemType itemType,
                                                        SearchResultRecyclerViewAdapter adapter,
-                                                       PaggingController paggingController)
+                                                    PagingController pagingController)
     {
         switch (itemType)
         {
             case VIEW_ITEM_LOADER:
             {
-                PaggingController.ScrollDirection direction = paggingController.getScrollDirection();
-                LinkedList<RecyclerViewItem> recyclerViewItems = paggingController.getData();
+                PagingController.ScrollDirection direction = pagingController.getScrollDirection();
+                LinkedList<RecyclerViewItem> recyclerViewItems = pagingController.getData();
 
                 LoaderRecyclerViewItem loaderItem = new LoaderRecyclerViewItem();
 
                 int position;
-                if(direction == PaggingController.ScrollDirection.UP)
+                if(direction == PagingController.ScrollDirection.UP)
                 {
                     recyclerViewItems.offerLast(loaderItem);
                     position = recyclerViewItems.size() - 1;
-                    paggingController.setLoaderPosition(position);
+                    pagingController.setLoaderPosition(position);
                     adapter.notifyItemInserted(position);
                 }
-                else if(direction == PaggingController.ScrollDirection.DOWN)
+                else if(direction == PagingController.ScrollDirection.DOWN)
                 {
                     recyclerViewItems.offerFirst(loaderItem);
                     position = 0;
-                    paggingController.setLoaderPosition(position);
+                    pagingController.setLoaderPosition(position);
                     adapter.notifyItemInserted(position);
                 }
-                else if(direction == PaggingController.ScrollDirection.IN_PLACE)
+                else if(direction == PagingController.ScrollDirection.IN_PLACE)
                 {
                     // new search
                     recyclerViewItems.offerFirst(loaderItem);
                     position = 0;
-                    paggingController.setLoaderPosition(position);
+                    pagingController.setLoaderPosition(position);
                     adapter.notifyItemInserted(position);
                 }
                 else
@@ -92,14 +92,14 @@ public final class SearchRecyclerViewItemFactory
 
     static public void removeLoaderRecyclerViewItem(SearchRecyclerViewItemType itemType,
                                                        SearchResultRecyclerViewAdapter adapter,
-                                                       PaggingController paggingController)
+                                                       PagingController pagingController)
     {
         switch (itemType)
         {
             case VIEW_ITEM_LOADER:
             {
-                int position = paggingController.getLoaderPosition();
-                LinkedList<RecyclerViewItem> recyclerViewItems = paggingController.getData();
+                int position = pagingController.getLoaderPosition();
+                LinkedList<RecyclerViewItem> recyclerViewItems = pagingController.getData();
 
                 boolean inBounds = (position >= 0) && (position < recyclerViewItems.size());
                 if(inBounds)
@@ -131,38 +131,38 @@ public final class SearchRecyclerViewItemFactory
 
     static public void createFailedResponseRecyclerViewItem(SearchRecyclerViewItemType itemType,
                                                                SearchResultRecyclerViewAdapter adapter,
-                                                               PaggingController paggingController)
+                                                               PagingController pagingController)
     {
         switch (itemType)
         {
             case VIEW_ITEM_FAILED_RESPONSE:
             {
-                PaggingController.ScrollDirection direction = paggingController.getScrollDirection();
-                LinkedList<RecyclerViewItem> recyclerViewItems = paggingController.getData();
+                PagingController.ScrollDirection direction = pagingController.getScrollDirection();
+                LinkedList<RecyclerViewItem> recyclerViewItems = pagingController.getData();
 
                 FailedResponseRecyclerViewItem failedResponseItem = new FailedResponseRecyclerViewItem();
 
                 int position;
-                if(direction == PaggingController.ScrollDirection.UP)
+                if(direction == PagingController.ScrollDirection.UP)
                 {
                     recyclerViewItems.offerLast(failedResponseItem);
                     position = recyclerViewItems.size() - 1;
-                    paggingController.setFailedResponsePosition(position);
+                    pagingController.setFailedResponsePosition(position);
                     adapter.notifyItemInserted(position);
                 }
-                else if(direction == PaggingController.ScrollDirection.DOWN)
+                else if(direction == PagingController.ScrollDirection.DOWN)
                 {
                     recyclerViewItems.offerFirst(failedResponseItem);
                     position = 0;
-                    paggingController.setFailedResponsePosition(position);
+                    pagingController.setFailedResponsePosition(position);
                     adapter.notifyItemInserted(position);
                 }
-                else if(direction == PaggingController.ScrollDirection.IN_PLACE)
+                else if(direction == PagingController.ScrollDirection.IN_PLACE)
                 {
                     // new search
                     recyclerViewItems.offerFirst(failedResponseItem);
                     position = 0;
-                    paggingController.setFailedResponsePosition(position);
+                    pagingController.setFailedResponsePosition(position);
                     adapter.notifyItemInserted(position);
                 }
                 else
@@ -181,14 +181,14 @@ public final class SearchRecyclerViewItemFactory
 
     static public void removeFailedResponseRecyclerViewItem(SearchRecyclerViewItemType itemType,
                                                        SearchResultRecyclerViewAdapter adapter,
-                                                       PaggingController paggingController)
+                                                       PagingController pagingController)
     {
         switch (itemType)
         {
             case VIEW_ITEM_FAILED_RESPONSE:
             {
-                int position = paggingController.getFailedResponsePosition();
-                LinkedList<RecyclerViewItem> recyclerViewItems = paggingController.getData();
+                int position = pagingController.getFailedResponsePosition();
+                LinkedList<RecyclerViewItem> recyclerViewItems = pagingController.getData();
 
                 boolean inBounds = (position >= 0) && (position < recyclerViewItems.size());
                 if(inBounds)

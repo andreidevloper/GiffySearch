@@ -6,7 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
 
-import com.as.giffysearch.Controllers.PaggingController;
+import com.as.giffysearch.Controllers.PagingController;
 import com.as.giffysearch.Utility.Debugging;
 
 /**
@@ -38,7 +38,7 @@ public abstract class EndlessRecyclerViewScrollListener extends RecyclerView.OnS
 
     // PaggingController helps to determine if data is still loading or not
     // Also helps to determine current page index and check if end of list was reached
-    private PaggingController paggingController_;
+    private PagingController pagingController_;
     // True if we are still waiting for the last set of data to load.
     private boolean loading_ = false;
 
@@ -53,11 +53,11 @@ public abstract class EndlessRecyclerViewScrollListener extends RecyclerView.OnS
     // Help to find last and fist visible elements
     private RecyclerView.LayoutManager layoutManager_;
 
-    public EndlessRecyclerViewScrollListener(LinearLayoutManager layoutManager, PaggingController paggingController)
+    public EndlessRecyclerViewScrollListener(LinearLayoutManager layoutManager, PagingController pagingController)
     {
         initScrollListener();
         this.layoutManager_ = layoutManager;
-        this.paggingController_ = paggingController;
+        this.pagingController_ = pagingController;
     }
 
     public EndlessRecyclerViewScrollListener(GridLayoutManager layoutManager)
@@ -88,11 +88,11 @@ public abstract class EndlessRecyclerViewScrollListener extends RecyclerView.OnS
     {
         int firstVisibleItemPosition = getFirstVisibleItemPosition();
         int lastVisibleItemPosition = getLastVisibleItemPosition();
-        PaggingController.ScrollDirection scrollDirection = getScrollDirection(firstVisibleItemPosition, lastVisibleItemPosition);
+        PagingController.ScrollDirection scrollDirection = getScrollDirection(firstVisibleItemPosition, lastVisibleItemPosition);
 
-        boolean isReachedEnd = paggingController_.isReachedEnd();
-        if((isReachedEnd && scrollDirection == PaggingController.ScrollDirection.UP) ||
-           (isReachedEnd && paggingController_.getCurrentPage() == 0))
+        boolean isReachedEnd = pagingController_.isReachedEnd();
+        if((isReachedEnd && scrollDirection == PagingController.ScrollDirection.UP) ||
+           (isReachedEnd && pagingController_.getCurrentPage() == 0))
         {
             return;
         }
@@ -100,15 +100,15 @@ public abstract class EndlessRecyclerViewScrollListener extends RecyclerView.OnS
         RecyclerView.Adapter adapter = view.getAdapter();
         int totalItemCount = adapter.getItemCount();
         boolean isAllowLoadMore = false;
-        if(scrollDirection == PaggingController.ScrollDirection.UP &&
+        if(scrollDirection == PagingController.ScrollDirection.UP &&
            (lastVisibleItemPosition + visibleThreshold_) >= totalItemCount)
         {
             isAllowLoadMore = true;
             // Debugging.logClass(Log.DEBUG, LOG_TAG, "ALLOW LOAD MORE - DIRECTION UP");
         }
-        else if(paggingController_.getCurrentPage() != PaggingController.MAX_LOADED_PAGE &&
+        else if(pagingController_.getCurrentPage() != PagingController.MAX_LOADED_PAGE &&
                 isCanLoadMoreScrollDown &&
-                scrollDirection == PaggingController.ScrollDirection.DOWN &&
+                scrollDirection == PagingController.ScrollDirection.DOWN &&
                 (firstVisibleItemPosition - visibleThreshold_) <= 0)
         {
             isAllowLoadMore = true;
@@ -122,17 +122,17 @@ public abstract class EndlessRecyclerViewScrollListener extends RecyclerView.OnS
             {
                 if (!isFooterView(adapter))
                 {
-                    currentPage_ = paggingController_.getCurrentPage();
-                    loading_ = paggingController_.isLoading();
+                    currentPage_ = pagingController_.getCurrentPage();
+                    loading_ = pagingController_.isLoading();
                 }
             }
             else
             {
-                currentPage_ = paggingController_.getCurrentPage();
-                loading_ = paggingController_.isLoading();
+                currentPage_ = pagingController_.getCurrentPage();
+                loading_ = pagingController_.isLoading();
             }
 
-            boolean isFailedResponse = paggingController_.isFailedResponse();
+            boolean isFailedResponse = pagingController_.isFailedResponse();
 
             if (!loading_ && !isFailedResponse)
             {
@@ -140,21 +140,21 @@ public abstract class EndlessRecyclerViewScrollListener extends RecyclerView.OnS
                 // the visibleThreshold and need to reload more data.
                 // If we do need to reload some more data, we execute onLoadMore to fetch the data.
                 // threshold should reflect how many total columns there are too
-                if(scrollDirection == PaggingController.ScrollDirection.UP)
+                if(scrollDirection == PagingController.ScrollDirection.UP)
                 {
-                    currentPage_ += PaggingController.NEXT_PAGE;
+                    currentPage_ += PagingController.NEXT_PAGE;
 
-                    if(currentPage_ > PaggingController.MAX_LOADED_PAGE)
+                    if(currentPage_ > PagingController.MAX_LOADED_PAGE)
                     {
                         isCanLoadMoreScrollDown = true;
                     }
 
                     // Debugging.logClass(Log.DEBUG, LOG_TAG, "LOADING UP - currentPage = " + currentPage_);
                 }
-                else if(scrollDirection == PaggingController.ScrollDirection.DOWN)
+                else if(scrollDirection == PagingController.ScrollDirection.DOWN)
                 {
                     // get page before previous page
-                    currentPage_ -= PaggingController.PREVIOUS_PAGE;
+                    currentPage_ -= PagingController.PREVIOUS_PAGE;
                     if(currentPage_ < 0)
                     {
                         currentPage_ = 0;
@@ -299,19 +299,19 @@ public abstract class EndlessRecyclerViewScrollListener extends RecyclerView.OnS
         return maxSize;
     }
 
-    private PaggingController.ScrollDirection getScrollDirection(int firstVisibleItemPosition, int lastVisibleItemPosition)
+    private PagingController.ScrollDirection getScrollDirection(int firstVisibleItemPosition, int lastVisibleItemPosition)
     {
-        PaggingController.ScrollDirection direction = PaggingController.ScrollDirection.UNKNOWN;
+        PagingController.ScrollDirection direction = PagingController.ScrollDirection.UNKNOWN;
         if(firstVisibleItemPosition > firstVisiblePreviousPos_ ||
                 lastVisibleItemPosition > lastVisiblePreviousPos_)
         {
-            direction = PaggingController.ScrollDirection.UP;
+            direction = PagingController.ScrollDirection.UP;
             //Debugging.logClass(Log.DEBUG, LOG_TAG,"SCROLLED UP!");
         }
         else if(firstVisibleItemPosition < firstVisiblePreviousPos_ ||
                 lastVisibleItemPosition < lastVisiblePreviousPos_)
         {
-            direction = PaggingController.ScrollDirection.DOWN;
+            direction = PagingController.ScrollDirection.DOWN;
             //Debugging.logClass(Log.DEBUG, LOG_TAG,"SCROLLED DOWN!");
         }
 
@@ -326,5 +326,5 @@ public abstract class EndlessRecyclerViewScrollListener extends RecyclerView.OnS
     public abstract int getFooterViewType(int defaultNoFooterViewType);
 
     // Defines the process for actually loading more data based on page
-    public abstract void onLoadMore(int page, PaggingController.ScrollDirection scrollDirection);
+    public abstract void onLoadMore(int page, PagingController.ScrollDirection scrollDirection);
 }

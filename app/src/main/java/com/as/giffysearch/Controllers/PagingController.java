@@ -21,9 +21,9 @@ import static com.as.giffysearch.Adapters.RecyclerViewItems.SearchRecyclerViewIt
  *
  */
 
-public class PaggingController
+public class PagingController
 {
-    private static final String LOG_TAG = PaggingController.class.getSimpleName();
+    private static final String LOG_TAG = PagingController.class.getSimpleName();
 
     // Start page counting from 0
     // 1 page size = GiphyAPI.DEFAULT_LIMIT
@@ -68,7 +68,7 @@ public class PaggingController
     // Profiler
     private Debugging.Profiler profiler_;
 
-    public PaggingController(Context context, int limit, int offset)
+    public PagingController(Context context, int limit, int offset)
     {
         this.currentOffset_ = offset;
         this.currentLimit_ = limit;

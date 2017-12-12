@@ -24,7 +24,7 @@ import com.bumptech.glide.integration.recyclerview.RecyclerViewPreloader;
 import com.bumptech.glide.util.ViewPreloadSizeProvider;
 
 import com.as.giffysearch.Listeners.EndlessRecyclerViewScrollListener;
-import com.as.giffysearch.Controllers.PaggingController;
+import com.as.giffysearch.Controllers.PagingController;
 import com.as.giffysearch.ActionModes.SearchAMCallback;
 
 import com.as.giffysearch.Adapters.SearchResultRecyclerViewAdapter;
@@ -73,7 +73,7 @@ public class SearchFragment extends Fragment implements SearchAMCallback.ISearch
     private GiphyAPI giphyAPI_ = GiphyAPI.INSTANCE;
 
     // Pagging
-    private PaggingController paggingController_;
+    private PagingController pagingController_;
 
     // Failed response from GIPHY API
     private boolean isFailedResponse_ = false;
@@ -111,7 +111,7 @@ public class SearchFragment extends Fragment implements SearchAMCallback.ISearch
 
     private void initPaggingController()
     {
-        paggingController_ = new PaggingController(applicationContext_, GiphyAPI.DEFAULT_LIMIT, GiphyAPI.DEFAULT_OFFSET);
+        pagingController_ = new PagingController(applicationContext_, GiphyAPI.DEFAULT_LIMIT, GiphyAPI.DEFAULT_OFFSET);
     }
 
     // ------- Search Bar Action Mode -------
@@ -149,21 +149,21 @@ public class SearchFragment extends Fragment implements SearchAMCallback.ISearch
                 resetSearch();
                 showStartLoading();
 
-                paggingController_.startSearch(searchInput_);
+                pagingController_.startSearch(searchInput_);
             }
         }
     }
 
     private void resetSearch()
     {
-        paggingController_.clear();
+        pagingController_.clear();
         searchResultRecyclerViewAdapter_.updateData();
     }
 
     private void showStartLoading()
     {
-        paggingController_.setScrollDirection(PaggingController.ScrollDirection.IN_PLACE);
-        paggingController_.setLoading(true);
+        pagingController_.setScrollDirection(PagingController.ScrollDirection.IN_PLACE);
+        pagingController_.setLoading(true);
         searchResultRecyclerViewAdapter_.addLoader();
     }
 
@@ -230,14 +230,14 @@ public class SearchFragment extends Fragment implements SearchAMCallback.ISearch
                 getActivity(),
                 gifItemRequest,
                 preloadSizeProvider_,
-                paggingController_,
-                paggingController_.getData(),
+                pagingController_,
+                pagingController_.getData(),
                 new SearchResultRecyclerViewAdapter.FailedResponseViewHolder.ClickListener()
                 {
                     @Override public void onPositionClicked(int position)
                     {
                         // callback performed on click
-                        paggingController_.restartSearch();
+                        pagingController_.restartSearch();
                     }
                 });
 
@@ -256,7 +256,7 @@ public class SearchFragment extends Fragment implements SearchAMCallback.ISearch
 
     private RecyclerView.OnScrollListener getEndlessRecyclerViewScrollListener()
     {
-        return new EndlessRecyclerViewScrollListener((LinearLayoutManager) searchResultRecyclerView_.getLayoutManager(), paggingController_)
+        return new EndlessRecyclerViewScrollListener((LinearLayoutManager) searchResultRecyclerView_.getLayoutManager(), pagingController_)
         {
             @Override
             public int getFooterViewType(int defaultNoFooterViewType)
@@ -266,23 +266,23 @@ public class SearchFragment extends Fragment implements SearchAMCallback.ISearch
 
             @Override
             public void onLoadMore(final int page,
-                                   final PaggingController.ScrollDirection scrollDirection)
+                                   final PagingController.ScrollDirection scrollDirection)
             {
-                if(!paggingController_.isLoading() &&
+                if(!pagingController_.isLoading() &&
                    checkNetworkConnection() &&
                    !isFailedResponse_)
                 {
 
-                    paggingController_.setCurrentPage(page);
-                    paggingController_.setScrollDirection(scrollDirection);
-                    paggingController_.setLoading(true);
+                    pagingController_.setCurrentPage(page);
+                    pagingController_.setScrollDirection(scrollDirection);
+                    pagingController_.setLoading(true);
 
                     searchResultRecyclerView_.post(new Runnable()
                     {
                         public void run()
                         {
                             searchResultRecyclerViewAdapter_.addLoader();
-                            paggingController_.continueSearch(
+                            pagingController_.continueSearch(
                                     page * GiphyAPI.DEFAULT_LIMIT);
                         }
                     });
@@ -301,27 +301,27 @@ public class SearchFragment extends Fragment implements SearchAMCallback.ISearch
             hideFailedResponse();
         }
 
-        paggingController_.setSearchResult(result, true);
+        pagingController_.setSearchResult(result, true);
         postSearch(true);
     }
 
     private void hideFailedResponse()
     {
         isFailedResponse_ = false;
-        paggingController_.setIsFailedResponse(false);
+        pagingController_.setIsFailedResponse(false);
         searchResultRecyclerViewAdapter_.removeFailedResponse();
     }
 
     public void onSearchFailed()
     {
         Toast.makeText(applicationContext_, "Response failed. Can't continue search !", Toast.LENGTH_LONG).show();
-        paggingController_.setSearchResult(null, false);
+        pagingController_.setSearchResult(null, false);
         postSearch(false);
     }
 
     private void postSearch(boolean isSuccessful)
     {
-        if(paggingController_.isLoading())
+        if(pagingController_.isLoading())
         {
             hideLoading();
         }
@@ -344,33 +344,33 @@ public class SearchFragment extends Fragment implements SearchAMCallback.ISearch
         // 3. Scroll to the half of the recycle view's list if user scrolls UP or DOWN
         scrollToCenter();
 
-        paggingController_.setLoading(false);
+        pagingController_.setLoading(false);
     }
 
     private void showFailedResponse()
     {
         searchResultRecyclerViewAdapter_.addFailedResponse();
         isFailedResponse_ = true;
-        paggingController_.setIsFailedResponse(true);
+        pagingController_.setIsFailedResponse(true);
     }
 
     private void scrollToCenter()
     {
-        PaggingController.ScrollDirection scrollDirection = paggingController_.getScrollDirection();
-        int size = paggingController_.getData().size();
-        int currentPage = paggingController_.getCurrentPage();
-        if (currentPage > PaggingController.MAX_LOADED_PAGE && size > GiphyAPI.DEFAULT_LIMIT && !isFailedResponse_)
+        PagingController.ScrollDirection scrollDirection = pagingController_.getScrollDirection();
+        int size = pagingController_.getData().size();
+        int currentPage = pagingController_.getCurrentPage();
+        if (currentPage > PagingController.MAX_LOADED_PAGE && size > GiphyAPI.DEFAULT_LIMIT && !isFailedResponse_)
         {
-            if (scrollDirection == PaggingController.ScrollDirection.UP)
+            if (scrollDirection == PagingController.ScrollDirection.UP)
             {
                 searchResultRecyclerView_.getLayoutManager().scrollToPosition((size / 2) - 4);
             }
-            else if (scrollDirection == PaggingController.ScrollDirection.DOWN)
+            else if (scrollDirection == PagingController.ScrollDirection.DOWN)
             {
                 searchResultRecyclerView_.getLayoutManager().scrollToPosition((size / 2) + 4);
             }
 
-            paggingController_.resetScrollDirection();
+            pagingController_.resetScrollDirection();
         }
     }
 
@@ -387,7 +387,7 @@ public class SearchFragment extends Fragment implements SearchAMCallback.ISearch
 
         destroyDisabledNetworkFragment();
 
-        paggingController_.logAverageRequestTime();
+        pagingController_.logAverageRequestTime();
     }
 
     private boolean checkNetworkConnection()
@@ -427,9 +427,9 @@ public class SearchFragment extends Fragment implements SearchAMCallback.ISearch
         return searchInput_;
     }
 
-    public PaggingController getPaggingController()
+    public PagingController getPaggingController()
     {
-        return paggingController_;
+        return pagingController_;
     }
 
     public SearchResultRecyclerViewAdapter getSearchResultRecyclerViewAdapter()
