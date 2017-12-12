@@ -96,6 +96,6 @@ public final class HistoryController
         }
 
         // Commit the edits!
-        editor.commit();
+        editor.apply();
     }
 }
