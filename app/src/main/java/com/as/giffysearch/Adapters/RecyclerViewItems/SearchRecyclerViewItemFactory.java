@@ -79,8 +79,8 @@ public final class SearchRecyclerViewItemFactory
                 else
                 {
                     Debugging.logClass(Log.ERROR, LOG_TAG, "Unknown scroll direction. Can't create LoaderRecyclerViewItem!");
-                    break;
                 }
+                break;
             }
             default:
             {
@@ -119,6 +119,7 @@ public final class SearchRecyclerViewItemFactory
                 {
                     Debugging.logClass(Log.ERROR, LOG_TAG, "Failed to remove LoaderRecyclerViewItem at pos: " + position);
                 }
+                break;
             }
             default:
             {
@@ -170,6 +171,7 @@ public final class SearchRecyclerViewItemFactory
                     Debugging.logClass(Log.ERROR, LOG_TAG, "Unknown scroll direction. Can't create FailedResponseRecyclerViewItem!");
                     break;
                 }
+                break;
             }
             default:
             {
@@ -208,6 +210,7 @@ public final class SearchRecyclerViewItemFactory
                 {
                     Debugging.logClass(Log.ERROR, LOG_TAG, "Failed to remove FailedResponseRecyclerViewItem at pos: " + position);
                 }
+                break;
 
             }
             default:
