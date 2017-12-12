@@ -16,7 +16,6 @@ Giphy:
 
 * https://developers.giphy.com/
 * https://github.com/Giphy/GiphyAPI
-* https://github.com/Giphy/giphy-android-sdk-core
 
 Glide:
 
@@ -27,3 +26,7 @@ OkHttp:
 
 * http://square.github.io/okhttp/
 * https://github.com/square/okhttp
+
+google-gson:
+
+* https://github.com/google/gson

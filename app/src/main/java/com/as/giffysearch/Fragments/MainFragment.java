@@ -1,5 +1,6 @@
 package com.as.giffysearch.Fragments;
 
+import android.annotation.TargetApi;
 import android.app.Fragment;
 import android.os.Build;
 import android.view.LayoutInflater;
@@ -130,15 +131,7 @@ public class MainFragment extends Fragment
                 historyListView_.setAdapter(historyViewAdapter_);
                 historyViewAdapter_.notifyDataSetChanged();
 
-                ViewTreeObserver viewTreeObserver = historyListView_.getViewTreeObserver();
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
-                {
-                    viewTreeObserver.removeOnGlobalLayoutListener(this);
-                }
-                else
-                {
-                    viewTreeObserver.removeGlobalOnLayoutListener(this);
-                }
+                removeOnGlobalLayoutListener(historyListView_, this);
             }
 
         });
@@ -157,6 +150,20 @@ public class MainFragment extends Fragment
                 }
             }
         });
+    }
+
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+    @SuppressWarnings("deprecation")
+    private void removeOnGlobalLayoutListener(View v, ViewTreeObserver.OnGlobalLayoutListener listener)
+    {
+        if (Build.VERSION.SDK_INT < 16)
+        {
+            v.getViewTreeObserver().removeGlobalOnLayoutListener(listener);
+        }
+        else
+        {
+            v.getViewTreeObserver().removeOnGlobalLayoutListener(listener);
+        }
     }
 
 
