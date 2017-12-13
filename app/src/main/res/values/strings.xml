@@ -9,5 +9,4 @@
     <string name="response_failed">Response failed. Try again.</string>
 
     <string name="gif_description">GIF has got through GIPHY, OkHttp, GSON, and Glide</string>
-    <string name="gif_fullscreen_description">Full screen view of an GIF</string>
 </resources>

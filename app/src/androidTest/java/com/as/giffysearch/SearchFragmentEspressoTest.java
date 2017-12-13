@@ -26,7 +26,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import android.support.test.espresso.contrib.RecyclerViewActions;
 
 import com.as.giffysearch.Adapters.SearchResultRecyclerViewAdapter;
-import com.as.giffysearch.Controllers.PaggingController;
+import com.as.giffysearch.Controllers.PagingController;
 import com.as.giffysearch.Fragments.SearchFragment;
 import com.as.giffysearch.ThirdParty.Giphy.GiphyAPI;
 
@@ -127,7 +127,7 @@ public class SearchFragmentEspressoTest
         searchFragment_ = getSearchFragment();
         if(searchFragment_ != null)
         {
-            PaggingController paggingController = searchFragment_.getPaggingController();
+            PagingController paggingController = searchFragment_.getPaggingController();
 
             boolean isLoading = true;
             while(isLoading)
